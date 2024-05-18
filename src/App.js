@@ -5,9 +5,10 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, Legend } from 'recharts';
 import moment from 'moment';
 
-function Interval() {
+function Interval({getDaysNo}) {
   const [intervalName, setIntervalName] = useState(null);
-  const intervalList = ['1 hour', '24 hours', '7 days', '30 days'];
+  const intervalList = [7, 10, 30, 90];
+
   return(
     <div className="dropdown">
     <a className="btn btn-secondary dropdown-toggle" 
@@ -21,33 +22,33 @@ function Interval() {
           onClick={(event) => {
             event.preventDefault();
             setIntervalName(el);
-          }}>{el}</a></li>
+            getDaysNo(el);
+          }}>{el} days</a></li>
       })}
     </ul>
   </div>
   )
 }
 
-function CurrencyList() {
+function CurrencyList({getCurrencyName}) {
   const [list, setList] = useState([]);
   const [currency, setCurrency] = useState(null);
- 
 
   function getCurrency() {
     fetch('https://api.coincap.io/v2/assets')
+    // fetch('https://api.coingecko.com/api/v3/search?query=eth')
       .then((response) => response.json())
         .then((data) => {
-          // console.log(data.data[1].id);
+          // console.log(data);  
           setList(data.data);
         }).catch((err) => {
           console.log('not loading...', err);
     });
-
-    // fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily&x_cg_demo_api_key=CG-oc5fuhLwjXr58JdiLx7ZXmxQ')
-    //   .then((response) => response.json())
-    //     .then((data) => {
-    //       // console.log(data);
-    //     })
+    fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd') 
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+      })
     
   }
 
@@ -65,46 +66,48 @@ function CurrencyList() {
             onClick={(event) => {
               event.preventDefault();
               setCurrency(el.id);
+              getCurrencyName(el.id);
             }}>{el.id}</a></li>
         })}
-        {/* <li><a className="dropdown-item" href="#">Bitcoin 1</a></li>
-        <li><a className="dropdown-item" href="#">Bitcoin 2</a></li>
-        <li><a className="dropdown-item" href="#">Bitcoin 3</a></li>
-        <li><a className="dropdown-item" href="#">Bitcoin 4</a></li> */}
       </ul>
-      {/* <button onClick={getCurrency} className={"btn btn-primary"}>Get info</button> */}
     </div>
   )
 }
 
-function CreateChart() {
-  const [values1, setValues] = useState([]);
+function CreateChart({currName, daysNo}) {
+  const [data, setData] = useState([]);
+ 
+  useEffect(() => {
+    let arr1 = [];
+    let arr2 = [];
 
-  fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily&x_cg_demo_api_key=CG-oc5fuhLwjXr58JdiLx7ZXmxQ')
+    // ${currName} ==> bitcoin
+    fetch(`https://api.coingecko.com/api/v3/coins/${currName}/market_chart?vs_currency=usd&days=${daysNo}&interval=daily&x_cg_demo_api_key=CG-oc5fuhLwjXr58JdiLx7ZXmxQ`)
       .then((response) => response.json())
         .then((data) => {
-          const objArray = data.prices.map((el, index) => {
-            return {name: el[0], value: el[1]}
+          arr1 = data.prices.map((el) => {
+            return el[0];
           })
-          setValues(objArray);
-          // console.log(objArray);
-          // console.log(data)
-  })
+          arr2 = data.prices.map((el) => {
+            return el[1];
+          })
+          setData(arr1.map((el, index) => {
+            // console.log(new Date(el).toLocaleString());
+            return {
+              // name: moment.unix(el / 1000).format("MM-DD-YY"),
+              name: new Date(el).toLocaleString(),
+              // name: el,
+              value: arr2[index]
+            }
+          }))
+        })
+  }, [currName, daysNo]);
 
-  const data = [
-    {value: 63430.5714573684, name: moment.unix(1713225600000 / 1000).format("MM-DD-YY")},
-    {value: 63720.501587480736, name:  moment.unix(1713312000000 / 1000).format("MM-DD-YY")},
-    {value: 61328.89798860725, name: moment.unix(1713398400000 / 1000).format("MM-DD-YY")},
-    {value: 63120, name: moment.unix(1713484800000 / 1000).format("MM-DD-YY")},
-    {value: 63120, name: moment.unix(1713571200000 / 1000).format("MM-DD-YY")},
-    {value: 60120, name: moment.unix(1713657600000 / 1000).format("MM-DD-YY")},
-    {value: 63120, name: moment.unix(1713744000000 / 1000).format("MM-DD-YY")},
-    {value: 63120, name: moment.unix(1713830400000 / 1000).format("MM-DD-YY")},
-    {value: 63120, name: moment.unix(1713916800000 / 1000).format("MM-DD-YY")},
-    {value: 63120, name: moment.unix(1714003200000 / 1000).format("MM-DD-YY")}
-  ];
 
-  const data1 = values1;
+  // const data = [
+  //   {value: 5, name: "Ana"},
+  //   {value: 6, name:  moment.unix(1713312000000 / 1000).format("MM-DD-YY")}
+  // ];
 
   return (
     <BarChart width={500} height={300} data={data}
@@ -125,13 +128,24 @@ function CreateChart() {
 }
 
 function App() {
+  const [currName, setCurrName] = useState('bitcoin');
+  const [daysNo, setDaysNo] = useState(0);
+
+  function getDaysNo(daysNo) {
+    console.log(daysNo);
+    setDaysNo(daysNo);
+  }
+  function getCurrencyName(currencyName) {
+    console.log(currencyName);
+    setCurrName(currencyName);
+  }
   return (
     <div className="app">
       <h1 style={{padding:'3rem'}}>Cryptocurrency list</h1>
       <div className='lists'>
-        <CurrencyList />
-        <Interval />
-        <CreateChart />
+        <CurrencyList getCurrencyName={getCurrencyName}/>
+        <Interval getDaysNo={getDaysNo}/>
+        <CreateChart currName={currName} daysNo={daysNo}/>
       </div>
     </div>
   );
