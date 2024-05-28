@@ -19,10 +19,6 @@ export default function Percentage({symbols, daysNo}) {
           })
       }
     }, [daysNo]);
-     
-    const newlist = percentageList;
-    newlist.sort((a, b) => 
-      parseFloat(a.percentage) > parseFloat(b.percentage) ? -1 : 1);
     
     const topFive = percentageList.sort((a, b) => 
       parseFloat(a.percentage) > parseFloat(b.percentage) ? -1 : 1).slice(0, 5);
