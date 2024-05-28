@@ -15,9 +15,14 @@ code {
 .app {
   text-align: center;
   width: 60%;
+  margin: 0 auto;
 }
 
 .lists {
   display: flex;
   justify-content: space-between;
+}
+
+ul {
+  list-style: none;
 }
