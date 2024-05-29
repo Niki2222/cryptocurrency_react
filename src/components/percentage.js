@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 
 export default function Percentage({symbols, daysNo}) {
     const [percentageList, setPercentageList] = useState([]);
+    // const [topFive, setTopFive] = useState(percentageList);
+    // const [lastFive, setLastFive] = useState(percentageList);
   
     useEffect(() => {
       setPercentageList([])
@@ -14,10 +16,15 @@ export default function Percentage({symbols, daysNo}) {
               / data.prices[0][1]).toFixed(2);
             setPercentageList(prevList => [...prevList, {name: symbols[i], 
               percentage: total}]);
+            // setTopFive(percentageList.sort((a, b) => 
+            //   parseFloat(a.percentage) > parseFloat(b.percentage) ? -1 : 1)
+            //   .slice(0, 5))
+            // setLastFive(percentageList.sort((a, b) => 
+            //   parseFloat(a.percentage) < parseFloat(b.percentage) ? -1 : 1)
+            //   .slice(0, 5))
           })).catch((error) => {
             console.log(error);
-          })
-      }
+          })}
     }, [daysNo]);
     
     const topFive = percentageList.sort((a, b) => 

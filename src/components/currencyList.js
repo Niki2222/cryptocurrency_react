@@ -5,6 +5,7 @@ export default function CurrencyList({getCurrencyName, getCurrencyList}) {
     const [coincapList, setCoincapList] = useState([]);
     const [coingeckoList, setCoingeckoList] = useState([]);
     const [currency, setCurrency] = useState(null);
+    // const [myList, setMyList] = useState([]);
         
     function getCurrency() {
         fetch('https://api.coincap.io/v2/assets')
@@ -13,16 +14,15 @@ export default function CurrencyList({getCurrencyName, getCurrencyList}) {
                     setCoincapList(data.data); // complete list of 100      
                 }).catch((err) => {
                     console.log('not loading...', err);
-                }
-                );  
+                });  
         
         fetch('https://api.coingecko.com/api/v3/simple/supported_vs_currencies?x_cg_demo_api_key=CG-oc5fuhLwjXr58JdiLx7ZXmxQ')
             .then((response) => response.json())
                 .then((data) => {
-                setCoingeckoList(data); // list of 62
+                    setCoingeckoList(data); // list of 62
                 }).catch((err) => {
-                console.log('not loading...', err);
-                })
+                    console.log('not loading...', err);
+                });
     }
 
     function combinedList() {
@@ -39,6 +39,7 @@ export default function CurrencyList({getCurrencyName, getCurrencyList}) {
         return combined;
     }
   
+    // setMyList(combinedList()); // too many re-renders...
     const myList = combinedList();
   
     useEffect(() => {
@@ -57,13 +58,13 @@ export default function CurrencyList({getCurrencyName, getCurrencyList}) {
             </a>
             <ul className="dropdown-menu">
                 {myList.map((el, index) => {
-                    return <li key={index}><a className="dropdown-item" href='#'
+                    return <li key={index}><button className="dropdown-item" 
                     onClick={(event) => {
                         event.preventDefault();
                         setCurrency(el);
                         getCurrencyName(el);
                     }
-                    }>{el}</a></li>
+                    }>{el}</button></li>
                 })}
             </ul>
         </div>

@@ -14,13 +14,13 @@ export default function Interval({getDaysNo}) {
     </a>
     <ul className="dropdown-menu">
       {intervalList.map((el, index) => {
-        return <li key={index}><a className="dropdown-item" href="#"
+        return <li key={index}><button className="dropdown-item"
           onClick={(event) => {
             event.preventDefault();
             setIntervalName(el + ' days');
             getDaysNo(el);
           }
-        }>{el} days</a></li>
+        }>{el} days</button></li>
       })}
     </ul>
   </div>
