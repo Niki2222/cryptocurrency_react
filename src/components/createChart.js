@@ -20,22 +20,15 @@ export default function CreateChart({currName, daysNo}) {
                         return el[1];
                     })
                     
-                    // function getInfo(dateList, priceList) { if I uncomment this function, the chart is not showing...
-                    //     dateList.map((el, index) => {
-                    //         return {
-                    //             name: new Date(el).toLocaleString(),
-                    //             value: priceList[index]
-                    //         }
-                    //     })
-                    // }
-                    // setData(getInfo(dateList, priceList))
-
-                    setData(dateList.map((el, index) => {
-                        return {
-                            name: new Date(el).toLocaleString(),
-                            value: priceList[index]
-                        }
-                    }))
+                    function getInfo(dateList, priceList) { //if I uncomment this function, the chart is not showing...
+                        return dateList.map((el, index) => {
+                            return {
+                                name: new Date(el).toLocaleString(),
+                                value: priceList[index]
+                            }
+                        })
+                    }
+                    setData(getInfo(dateList, priceList))
 
                 }).catch((err) => {
                     console.log('not loading...', err);

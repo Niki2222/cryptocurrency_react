@@ -5,7 +5,7 @@ export default function CurrencyList({getCurrencyName, getCurrencyList}) {
     const [coincapList, setCoincapList] = useState([]);
     const [coingeckoList, setCoingeckoList] = useState([]);
     const [currency, setCurrency] = useState(null);
-    // const [myList, setMyList] = useState([]);
+    const [myList, setMyList] = useState([]);
         
     function getCurrency() {
         fetch('https://api.coincap.io/v2/assets')
@@ -39,12 +39,11 @@ export default function CurrencyList({getCurrencyName, getCurrencyList}) {
         return combined;
     }
   
-    // setMyList(combinedList()); // too many re-renders...
-    const myList = combinedList();
-  
     useEffect(() => {
         if (coincapList.length > 0 && coingeckoList.length > 0) {
-            getCurrencyList(myList);
+            const combined = combinedList();
+            setMyList(combined);
+            getCurrencyList(combined);
         }
     }, [coincapList, coingeckoList])
         

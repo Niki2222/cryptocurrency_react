@@ -1,4 +1,4 @@
-import React from 'react-dom';
+import React from 'react';
 import { useState } from 'react';
 import './App.css';
 import Interval from './components/interval';
