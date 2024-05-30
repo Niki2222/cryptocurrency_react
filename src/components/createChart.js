@@ -20,7 +20,7 @@ export default function CreateChart({currName, daysNo}) {
                         return el[1];
                     })
                     
-                    function getInfo(dateList, priceList) { //if I uncomment this function, the chart is not showing...
+                    function getInfo(dateList, priceList) { 
                         return dateList.map((el, index) => {
                             return {
                                 name: new Date(el).toLocaleString(),
@@ -43,7 +43,8 @@ export default function CreateChart({currName, daysNo}) {
                 left: 20,
                 bottom: 5,
             }} barSize={20}>
-            <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
+            <XAxis dataKey="name" scale="point" 
+                padding={{ left: 10, right: 10 }} />
             <YAxis />
             <Tooltip />
             <Legend />
