@@ -49,12 +49,11 @@ export default function CurrencyList({getCurrencyName, getCurrencyList}) {
         
     return(
         <div className="dropdown" style={{width:"30%"}}>
-            <a className="btn btn-secondary dropdown-toggle" 
-                href="#" role="button" data-bs-toggle="dropdown" 
-                aria-expanded="false" 
+            <button className="btn btn-secondary dropdown-toggle" 
+                data-bs-toggle="dropdown" 
                 onClick={getCurrency}>
                 {currency ? currency : "Choose cryptocurrency"}
-            </a>
+            </button>
             <ul className="dropdown-menu">
                 {myList.map((el, index) => {
                     return <li key={index}><button className="dropdown-item" 

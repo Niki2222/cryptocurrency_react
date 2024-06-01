@@ -7,23 +7,22 @@ export default function Interval({getDaysNo}) {
       
   return(
     <div className="dropdown">
-    <a className="btn btn-secondary dropdown-toggle" 
-      href="#" role="button" data-bs-toggle="dropdown" 
-      aria-expanded="false">
-      {intervalName ? intervalName : "Choose interval"}
-    </a>
-    <ul className="dropdown-menu">
-      {intervalList.map((el, index) => {
-        return <li key={index}><button className="dropdown-item"
-          onClick={(event) => {
-            event.preventDefault();
-            setIntervalName(el + ' days');
-            getDaysNo(el);
-          }
-        }>{el} days</button></li>
-      })}
-    </ul>
-  </div>
+      <button className="btn btn-secondary dropdown-toggle" 
+        data-bs-toggle="dropdown">
+        {intervalName ? intervalName : "Choose interval"}
+      </button>
+      <ul className="dropdown-menu">
+        {intervalList.map((el, index) => {
+          return <li key={index}><button className="dropdown-item"
+            onClick={(event) => {
+              event.preventDefault();
+              setIntervalName(el + ' days');
+              getDaysNo(el);
+            }
+          }>{el} days</button></li>
+        })}
+      </ul>
+    </div>
   )
 }
   

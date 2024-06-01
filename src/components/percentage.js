@@ -15,7 +15,7 @@ export default function Percentage({symbols, daysNo}) {
           const data = await response.json();
           const total = ((data.prices[daysNo - 1][1] - data.prices[0][1]) * 100 
             / data.prices[0][1]).toFixed(2);
-          percentages.push({ name: symbols[i], percentage: total });
+          percentages.push({name: symbols[i], percentage: total});
         } catch (error) {
           console.log(error);
         }
