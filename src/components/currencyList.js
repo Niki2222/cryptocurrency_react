@@ -5,7 +5,7 @@ export default function CurrencyList({getCurrencyName, getCurrencyList}) {
     const [coincapList, setCoincapList] = useState([]);
     const [coingeckoList, setCoingeckoList] = useState([]);
     const [currency, setCurrency] = useState(null);
-    const [myList, setMyList] = useState([]);
+    const [currencyList, setCurrencyList] = useState([]);
         
     function getCurrency() {
         fetch('https://api.coincap.io/v2/assets')
@@ -42,7 +42,7 @@ export default function CurrencyList({getCurrencyName, getCurrencyList}) {
     useEffect(() => {
         if (coincapList.length > 0 && coingeckoList.length > 0) {
             const combined = combinedList();
-            setMyList(combined);
+            setCurrencyList(combined);
             getCurrencyList(combined);
         }
     }, [coincapList, coingeckoList])
@@ -55,7 +55,7 @@ export default function CurrencyList({getCurrencyName, getCurrencyList}) {
                 {currency ? currency : "Choose cryptocurrency"}
             </button>
             <ul className="dropdown-menu">
-                {myList.map((el, index) => {
+                {currencyList.map((el, index) => {
                     return <li key={index}><button className="dropdown-item" 
                     onClick={(event) => {
                         event.preventDefault();

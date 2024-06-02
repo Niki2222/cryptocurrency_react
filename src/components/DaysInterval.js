@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from 'react';
 
-export default function Interval({getDaysNo}) {
+export default function DaysInterval({getDaysNo}) {
   const [intervalName, setIntervalName] = useState(null);
   const intervalList = [7, 10, 30, 90];
       

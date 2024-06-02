@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, 
     Tooltip, Legend } from 'recharts';
 
-export default function CreateChart({currName, daysNo}) {
+export default function Chart({currName, daysNo}) {
     const [data, setData] = useState([]);
    
     useEffect(() => {
