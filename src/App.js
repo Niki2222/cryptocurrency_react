@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import './App.css';
 import DaysInterval from './components/DaysInterval';
-import CurrList from './components/CurrencyList';
+import CurrencyList from './components/CurrencyList';
 import PercentageIncreaseDecrease from './components/PercentageIncreaseDecrease';
 import Chart from './components/Chart';
 
